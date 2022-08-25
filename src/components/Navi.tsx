@@ -1,41 +1,41 @@
 import Icon from "./Icon";
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
 const NaviWrapper = styled.div`
-  border: 1px solid grey;
+  width: 100%;
+  height: 50px;
+  overflow-y: hidden;
+  overflow-x: hidden;
   .highLight{
-    color:red;
-    .icon {
-      fill:red;
-    }
+    background-color: rgb(246,209,180);
   }
-  >ul {
+  >ul 
+  {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     > a {
+      width: 33.333%;
       > li {
-        width: 80px;
-        height: 80px;
+        border-radius: 8px;
+        margin-left: 2px;
+        margin-right: 2px;
+        margin-top: 2px;
+        height: 50px;
         text-align: center;
-        border-radius: 50%;
-        border: 1px solid green;
         display: flex;
         flex-direction: column;
         align-items: center;
+        font-weight: bolder;
         .icon {
           width: 25px;
           height: 25px;
           display: inline-block;
-          margin-top: 18px;
-          fill:none;
         }
       }
     }
   }
 `
-
 const Navi = () =>{
     let activeClassName = "highLight";
     return(

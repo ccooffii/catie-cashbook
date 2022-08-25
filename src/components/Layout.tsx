@@ -1,28 +1,25 @@
 import React from "react";
 import Navi from "./Navi";
 import styled from "styled-components";
-
 const Wrapper = styled.div`
   border: 1px solid grey;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  @media(min-width: 600px){
-    height: 667px;
-    width: 375px;
-  }
+  background-color: rgb(254,251,240);
+  
 `
 const Main = styled.div`
-  border: 1px solid red;
   flex-grow: 1;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 `
 
 const Layout = (props : any) => {
     return (
     <div>
         <Wrapper>
-                <Main>
+                <Main className={props.className}>
                     {props.children}
                 </Main>
             <Navi />
