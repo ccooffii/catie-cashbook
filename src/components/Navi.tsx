@@ -54,7 +54,7 @@ const Navi = () =>{
                 <NavLink to="/statistics"
                          className = {({ isActive }) =>
                              isActive ? activeClassName : undefined }>
-                    <li><Icon name="analysis"></Icon>统计</li>
+                    <li><Icon name="analysis"></Icon>明细</li>
                 </NavLink>
             </ul>
         </NaviWrapper>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, {useState} from "react";
 import Icon from "../../components/Icon";
 import {Link} from "react-router-dom";
-import {useTags} from "../../useTags";
+import {useTags} from "../../hooks/useTags";
 interface TagProps {
     children?:React.ReactNode | React.ReactNode[];
     value:number[];
@@ -97,7 +97,7 @@ const TagsSection: React.FC<TagProps> = (props) => {
         if (index >= 0){
             props.onChange(selectedTagIds.filter(t => t !== tagId));
         }else {
-            props.onChange([...selectedTagIds,tagId])
+            props.onChange([tagId])
         }
     }
     const {tags,iconMap} = useTags();

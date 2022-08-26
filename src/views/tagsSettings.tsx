@@ -3,8 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 import Icon from "../components/Icon";
-import {useTags} from "../useTags";
-import {createId} from "../lib/createId";
+import {useTags} from "../hooks/useTags";
 const TagsBar = styled.div`
   background-color:rgb(246,208,164);
   height: 50px;
@@ -28,7 +27,7 @@ const TagsBar = styled.div`
 `
 const AddTagBar = styled.button`
   position: fixed;
-  top: 93vh;
+  top: 80vh;
   left:50%;
   background-color: rgba(232,130,148,0.7);
   border:none;

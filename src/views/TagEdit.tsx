@@ -1,4 +1,4 @@
-import {useTags} from "useTags";
+import {useTags} from "hooks/useTags";
 import {Link, useParams} from "react-router-dom";
 import React from "react";
 import Icon from "../components/Icon";
@@ -12,6 +12,8 @@ const EditWrapper = styled.div`
   flex-direction: column;
   background-color:rgb(254,251,240) ;
   height: 100vh;
+  user-select: text;
+  -webkit-user-select: text;
   >header{
     background-color:rgb(246,208,164);
     height: 50px;
@@ -50,6 +52,8 @@ const EditWrapper = styled.div`
     margin-top: 30px;
     border-radius: 10px;
     box-shadow: inset -2px -2px 0px rgba(0,0,0,0.25);
+    user-select: text;
+    -webkit-user-select: text;
     >input{
       font-size: inherit;
       overflow-x: hidden;
@@ -59,6 +63,8 @@ const EditWrapper = styled.div`
       background: none;
       border:none;
       max-width: 50%;
+      user-select: text;
+      -webkit-user-select: text;
     }
   }
   >div{
@@ -105,7 +111,6 @@ const TagEdit: React.FC = () => {
     if (tag){
         return(
             <EditWrapper>
-
                 <header>
                     <Link to='/tagsSettings'><Icon name='return'></Icon></Link>
                     <span>编辑标签 - {tag.name}</span>
@@ -115,7 +120,7 @@ const TagEdit: React.FC = () => {
                     <input type= "text" placeholder="输入标签名"
                            onChange={(e) => {
                                tempValue = e.target.value
-                               console.log(1)
+                               // console.log(1)
                            }}
                     />
                 </label>
@@ -130,7 +135,7 @@ const TagEdit: React.FC = () => {
                     } }>确定修改</AddButton>
                     <DeleteButton onClick={(e) => {
                         deleteTag(tag.id)
-                        console.log(1)
+                        // console.log(1)
                     }}>删除标签</DeleteButton>
                 </div>
             </EditWrapper>

@@ -1,7 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {createId} from "./lib/createId";
-import {useHref} from "react-router-dom";
-
+import {createId} from "../lib/createId";
 const useTags =() => {
     const [tags, setTags] = useState<{ id:number;name:string }[]>([]);
     useEffect(()=>{
@@ -32,8 +30,6 @@ const useTags =() => {
     useEffect(()=>{
         if(count.current > 1){
             window.localStorage.setItem('tags',JSON.stringify(tags))
-            console.log(1)
-            console.log(tags)
         }
     },[tags])
     const iconMap:{[k:string]:string} ={
@@ -87,6 +83,14 @@ const useTags =() => {
             setTags([...tags,{id:createId(),name:newTagName}]);
         }
     }
-    return{tags,iconMap,setTags,addTag,updateTag,findTag,findTagIndex,deleteTag}
+    const getName = (id:number) => {
+        const tag = tags.filter(tag=>tag.id===id)[0]
+        if(tag){
+            return tag.name
+        }else {
+            return ''
+        }
+    }
+    return{tags,iconMap,getName,setTags,addTag,updateTag,findTag,findTagIndex,deleteTag}
 }
 export {useTags};

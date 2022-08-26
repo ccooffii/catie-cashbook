@@ -3,7 +3,7 @@ import Navi from "./Navi";
 import styled from "styled-components";
 const Wrapper = styled.div`
   border: 1px solid grey;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: rgb(254,251,240);
@@ -22,7 +22,7 @@ const Layout = (props : any) => {
                 <Main className={props.className}>
                     {props.children}
                 </Main>
-            <Navi />
+            <Navi/>
         </Wrapper>
     </div>
     )

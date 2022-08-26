@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React, {useState} from "react";
+import {generateOutput} from "./NumberPadSection/generateOutput";
 interface padProps {
     children?:React.ReactNode;
     noteValue:string;
@@ -32,6 +33,8 @@ const NumberPad = styled.section`
       padding-left: 15px;
       flex-wrap: nowrap;
       font-size: 20px;
+      user-select: text;
+      -webkit-user-select: text;
       >input{
         overflow-x: hidden;
         height: 100%;
@@ -40,6 +43,8 @@ const NumberPad = styled.section`
         background: none;
         border:none;
         max-width: 30%;
+        user-select: text;
+        -webkit-user-select: text;
       }
       .output{
 
@@ -83,64 +88,29 @@ const NumberPad = styled.section`
   }
 `
 const NumberPadSection: React.FC<padProps> = (props) => {
-    // const [note,setNote] = useState('');
-    // console.log(note)
-    const note = props.noteValue;
-    // const [output,_setOutput] = useState('0');
-    // const output = props.padValue;
-    const output = props.padValue.toString();
-    let number:string;
+    let note = props.noteValue;
+    const [output,_setOutput] = useState(props.padValue.toString());
+    let tempOutput:string;
     const setOutput = (output:string) => {
         if(output.length > 12){
-            number = output.slice(0,12)
+            tempOutput = output.slice(0,12)
         }else if (output.length === 0){
-            number = '0';
+            tempOutput = '0';
         }else{
-            number = output;
+            tempOutput = output;
         }
-       props.padValueOnChange(parseFloat(number));
+        _setOutput(tempOutput)
+       props.padValueOnChange(parseFloat(tempOutput));
     };
     const onClickNumberPad = (e:React.MouseEvent) => {
-        let text = (e.target as HTMLButtonElement).textContent;
-        console.log(text);
-        switch (text){
-            case'0':
-            case'1':
-            case'2':
-            case'3':
-            case'4':
-            case'5':
-            case'6':
-            case'7':
-            case'8':
-            case'9':
-                if(output === '0'){
-                    setOutput(text);
-                }else{
-                    setOutput(output+ text)
-                }
-                break;
-            case'.':
-                if (output.indexOf('.') >= 0) {return output;}
-                return output + '.';
-                console.log(output)
-                break;
-            case'DELETE':
-                if(output.length === 1) {
-                    setOutput('0')
-                }else {
-                    setOutput(output.slice(0,output.length-1))
-                }
-                break;
-            case'CLEAR':
-                setOutput('0')
-                break;
-            case'OK':
-                if (props.onOK){
-                    props.onOK();
-                }
-                console.log('OK')
-                break;
+        const text = (e.target as HTMLButtonElement).textContent;
+        if (text === null) {return;}
+        if (text === 'OK') {
+            if (props.onOK) {props.onOK();}
+            return;
+        }
+        if ('0123456789.'.split('').concat(['DELETE', 'CLEAR']).indexOf(text) >= 0) {
+            setOutput(generateOutput(text, output));
         }
     }
     return (
