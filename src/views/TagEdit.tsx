@@ -20,6 +20,7 @@ const EditWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     box-shadow: inset -2px -2px 5px rgba(0,0,0,0.25);
+    overflow: hidden;
     >a{
       >svg{
         height: 50px;
@@ -60,45 +61,89 @@ const EditWrapper = styled.div`
       max-width: 50%;
     }
   }
-    >button{
-      position: fixed;
-      top: 40vh;
-      left:50%;
-      background-color: rgba(232,130,148,0.7);
-      border:none;
-      font-size: 18px;
-      padding: 8px;
-      transform: translateX(-50%);
-      border-radius: 14px;
-      z-index: 3;
-      color: white;
-      font-weight: bolder;
-      width: 150px;
-      height: 70px;
-      font-size: 20px;
-      box-shadow: inset -2px -3px 0px rgba(0,0,0,0.25);
-    }
-  
+  >div{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+`
+const AddButton = styled.button`
+  background-color: rgba(232,130,148,0.7);
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 14px;
+  color: white;
+  font-weight: bolder;
+  text-align: center;
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  border:none;
+  box-shadow: inset -2px -3px 0px rgba(0,0,0,0.25);
+`
+const DeleteButton = styled.button`
+  background-color: rgba(232,50,40,0.7);
+  border:none;
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 14px;
+  color: white;
+  font-weight: bolder;
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  box-shadow: inset -2px -3px 0px rgba(0,0,0,0.25);
 `
 const TagEdit: React.FC = () => {
-    const {findTag} = useTags();
+    const {findTag,updateTag,deleteTag} = useTags();
     let {id} = useParams<Params>();
     const tag = findTag(parseInt(id));
-    console.log(tag.name)
-    return(
-        <EditWrapper>
-            <header>
-                <Link to='/tagsSettings'><Icon name='return'></Icon></Link>
-                <span>编辑标签 - {tag.name}</span>
-            </header>
-            <label>
-                <span>修改标签名:</span>
-                <input type= "text" placeholder="输入标签名"/>
-            </label>
-            <button>
-                删除标签
-            </button>
-        </EditWrapper>
-    )
+    let tempValue:string;
+    if (tag){
+        return(
+            <EditWrapper>
+
+                <header>
+                    <Link to='/tagsSettings'><Icon name='return'></Icon></Link>
+                    <span>编辑标签 - {tag.name}</span>
+                </header>
+                <label>
+                    <span>修改标签名:</span>
+                    <input type= "text" placeholder="输入标签名"
+                           onChange={(e) => {
+                               tempValue = e.target.value
+                               console.log(1)
+                           }}
+                    />
+                </label>
+                <div>
+                    <AddButton onClick={(e) => {
+                        if(tempValue === tag.name || tempValue == ''){
+                            window.alert('请输入新的标签名')
+                        }else {
+                            window.alert('修改成功')
+                            updateTag(tag.id,{name:tempValue})
+                        }
+                    } }>确定修改</AddButton>
+                    <DeleteButton onClick={(e) => {
+                        deleteTag(tag.id)
+                        console.log(1)
+                    }}>删除标签</DeleteButton>
+                </div>
+            </EditWrapper>
+        )
+    }else {
+        return (
+            <EditWrapper>
+                <header>
+                    <Link to='/tagsSettings'><Icon name='return'></Icon></Link>
+                    <span>你要找的标签丢了</span>
+                </header>
+            </EditWrapper>
+        )
+    }
 }
 export {TagEdit};

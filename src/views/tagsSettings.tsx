@@ -41,14 +41,6 @@ const AddTagBar = styled.button`
   font-weight: bolder;
   box-shadow: inset -2px -3px 0px rgba(0,0,0,0.25);
 `
-
-// background-color:rgb(246,208,164);
-// height: 50px;
-// width: 100%;
-// display: flex;
-// align-items: center;
-// justify-content: space-between;
-// box-shadow: inset -2px -2px 5px rgba(0,0,0,0.25);
 const Container = styled.div`
   font-weight: bolder;
   display: flex;
@@ -99,14 +91,7 @@ const TagsList = styled.div`
   }
 `
 function TagsSettings(){
-    const {tags,setTags,iconMap} = useTags();
-    const onADddTag = () => {
-        const newTagName = window.prompt('新标签名字为')
-        if (newTagName !== null){
-            setTags([...tags,{id:createId(),name:newTagName}]);
-            console.log(tags)
-        }
-    }
+    const {tags,iconMap,addTag} = useTags();
     return (
         <Container>
             <TagsBar>
@@ -125,7 +110,7 @@ function TagsSettings(){
                     </li>
                 )}
             </TagsList>
-            <AddTagBar onClick={onADddTag}>新增标签</AddTagBar>
+            <AddTagBar onClick={addTag}>新增标签</AddTagBar>
         </Container>
     )
 }
