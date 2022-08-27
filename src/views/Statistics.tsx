@@ -82,24 +82,23 @@ const StatisticsLayOut = styled(Layout)`
   }
 `
 function Statistics() {
-    const {records,getAmount} = useRecords()
-    const {iconMap,getName} = useTags()
-    const {findDay} = useDate()
-    const hash : {[k:string]:RecordItem[]} = {};
+    const {records} = useRecords()
+    const {IconMap,getName} = useTags()
+    const {findToday,findMonth,findDay} = useDate()
+    const hashDay : {[k:string]:RecordItem[]} = {};
     records.map(record => {
         const key = dayjs(record.createdAt).format('YYYY-MM-DD')
-        if(!(key in hash)){
-            hash[key] = []
+        if(!(key in hashDay)){
+            hashDay[key] = []
         }
-        hash[key].push(record)
+        hashDay[key].push(record)
     })
-    const array = Object.entries(hash).sort((a,b)=>{
+    const array = Object.entries(hashDay).sort((a,b)=>{
         if (a[0]===b[0]) return 0
         if(a[0]<b[0]) return 1
         if(a[0]>b[0]) return -1
         return 0
     })
-    getAmount(hash);
     return (
         <StatisticsLayOut>
             <header>
@@ -111,26 +110,22 @@ function Statistics() {
                         {x[0]}
                     </span>
                     <span>
-                        {findDay(x[0])}
+                        {findToday(x[0])}
                     </span>
                 </div>
                 {x[1].map(record => {
                     return <li key={record.createdAt}>
                         <div className="name">
-                            <Icon name={iconMap[record.tagIds[0]]}></Icon>
+                            <Icon name={IconMap[record.tagIds[0]]||'猫猫'}></Icon>
                             <div>
                                 <span>{getName(record.tagIds[0])}</span>
                                 <span className='note'>{record.note}</span>
                             </div>
                         </div>
-                        {/*<div className="date">*/}
-                        {/*    周{dayjs(record.createdAt).day()}*/}
-                        {/*</div>*/}
                         <div className="amount">
                             <span>{record.category==='-'?'支出':'收入'}</span>
                             <span className="money">￥{record.amount}</span>
                         </div>
-                        {/*{dayjs(record.createdAt).format('YYYY年MM月DD日')}*/}
                     </li>
                 })}
 

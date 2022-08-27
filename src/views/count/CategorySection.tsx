@@ -38,7 +38,7 @@ const Category = styled.section`
 const CategorySection:React.FC<categoryProps> = (props) =>{
     // const [category, setCategory] = useState('-');
     const category = props.value;
-    const [categoryList] = useState<('-'|'+')[]>(    ['-','+'])
+    const [categoryList] = useState<('-'|'+')[]>(['-','+'])
     const categoryMap = {'-':'支出','+':'收入'}
     return (
         <Category>
@@ -46,7 +46,7 @@ const CategorySection:React.FC<categoryProps> = (props) =>{
                 {categoryList.map(c =>
                         <li key={c}
                             className={category === c ? 'selected':''}
-                            onClick={() => {props.onChange(c);}}
+                            onClick={() => {props.onChange(c)}}
                         >{categoryMap[c]}
                         </li>
                 )}

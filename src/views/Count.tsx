@@ -3,13 +3,17 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import {CategorySection} from "./count/CategorySection";
 import {NumberPadSection} from "./count/NumberPad";
-import {TagsSection} from "./count/TagListSection";
+import {PayTagsSection} from "./count/PayTagListSection";
 import {useRecords} from "../hooks/useRecords";
+import {IncomeTagListSection} from "./count/IncomeTagListSection";
 
 const MyLayout = styled(Layout)`
     display: flex;
     flex-direction: column;
     align-items: center;
+    &.category{
+      display: none;
+    }
 `
 const defaultFormData = {
     tagIds: [] as number[],
@@ -25,7 +29,7 @@ function Count() {
             ...obj
         })
     }
-    const {addRecord,records} = useRecords()
+    const {addRecord} = useRecords()
     const submit = () => {
         if(selected.amount === 0){
             return alert('请输入金额');
@@ -37,36 +41,51 @@ function Count() {
             window.location.reload()
         }
     }
-    // console.log(records);
-    return (
-        <MyLayout>
+    if(selected.category==='-'){
+        return (
+            <MyLayout>
                 <CategorySection
                     value={selected.category}
                     onChange={category => onChange({category})}
                 >
                 </CategorySection>
-            <TagsSection value = {selected.tagIds}
-                         onChange={tagIds => onChange({tagIds})}
-            >
-            </TagsSection>
+                <PayTagsSection
+                    value={selected.tagIds}
+                    onChange={tagIds => onChange({tagIds})}
+                >
+                </PayTagsSection>
                 <NumberPadSection
                     noteValue = {selected.note}
                     noteValueOnChange={note => onChange({note})}
-                      // noteValueOnChange={(note) => setSelected({
-                      //     ...selected,
-                      //     note : note
-                      // })}
                     padValue= {selected.amount}
                     padValueOnChange={amount => onChange({amount})}
                     onOK={submit}
-                      // padValueOnChange={(amount) => setSelected({
-                      //     ...selected,
-                      //     amount: amount
-                      // })}
-                      // onOK={()=>{}}
                 >
                 </NumberPadSection>
-        </MyLayout>
-    );
+            </MyLayout>
+        )
+    }else {
+        return(
+            <MyLayout>
+                <CategorySection
+                    value={selected.category}
+                    onChange={category => onChange({category})}
+                >
+                </CategorySection>
+                <IncomeTagListSection
+                    value={selected.tagIds}
+                    onChange={tagIds => onChange({tagIds})}>
+                </IncomeTagListSection>
+                <NumberPadSection
+                    noteValue = {selected.note}
+                    noteValueOnChange={note => onChange({note})}
+                    padValue= {selected.amount}
+                    padValueOnChange={amount => onChange({amount})}
+                    onOK={submit}
+                >
+                </NumberPadSection>
+            </MyLayout>
+            )
+    }
 }
 export default Count;

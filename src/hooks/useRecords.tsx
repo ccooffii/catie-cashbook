@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-export  type RecordItem = {
+export type RecordItem = {
     tagIds:number[]
     note:string
     category:('+'|'-')
@@ -14,9 +14,6 @@ type tempRecordItem = {
 }
 export const useRecords = () => {
     const [records, setRecords] = useState<RecordItem[]>([])
-    // const addRecord = (record:RecordItem) => {
-    //     setRecords([...records, record])
-    // };
     const addRecord = (tempRecord:tempRecordItem) => {
         if(tempRecord.amount <= 0){return}
         if(tempRecord.tagIds.length === 0){
@@ -37,8 +34,5 @@ export const useRecords = () => {
             window.localStorage.setItem('records',JSON.stringify(records))
         }
     })
-    const getAmount = (hash:{[k:string]:RecordItem[]}) => {
-        const array = Object.entries(hash)
-    }
-    return{records,addRecord,getAmount}
+    return{records,addRecord}
 }

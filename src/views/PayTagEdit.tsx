@@ -3,10 +3,10 @@ import {Link, useParams} from "react-router-dom";
 import React from "react";
 import Icon from "../components/Icon";
 import styled from "styled-components";
-type Params = {
+export type Params = {
     id:any
 }
-const EditWrapper = styled.div`
+export const EditWrapper = styled.div`
   font-weight: bolder;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,6 @@ const EditWrapper = styled.div`
     }
   }
   >label{
-    margin-top: 5px;
     display: flex;
     height: 100px;
     text-align: center;
@@ -44,7 +43,7 @@ const EditWrapper = styled.div`
     padding-right: 15px;
     padding-left: 15px;
     flex-wrap: nowrap;
-    ont-size: 20px;
+    font-size: 20px;
     background-color: rgb(246,208,164);
     border:1.5px solid black;
     margin-right: 50px;
@@ -75,9 +74,8 @@ const EditWrapper = styled.div`
     justify-content: space-evenly;
   }
 `
-const AddButton = styled.button`
+export const AddButton = styled.button`
   background-color: rgba(232,130,148,0.7);
-  font-size: 18px;
   padding: 8px;
   border-radius: 14px;
   color: white;
@@ -89,10 +87,9 @@ const AddButton = styled.button`
   border:none;
   box-shadow: inset -2px -3px 0px rgba(0,0,0,0.25);
 `
-const DeleteButton = styled.button`
+export const DeleteButton = styled.button`
   background-color: rgba(232,50,40,0.7);
   border:none;
-  font-size: 18px;
   padding: 8px;
   border-radius: 14px;
   color: white;
@@ -103,21 +100,21 @@ const DeleteButton = styled.button`
   text-align: center;
   box-shadow: inset -2px -3px 0px rgba(0,0,0,0.25);
 `
-const TagEdit: React.FC = () => {
-    const {findTag,updateTag,deleteTag} = useTags();
+export const PayTagEdit: React.FC = () => {
+    const {findTag, updateTag, deleteTag} = useTags();
     let {id} = useParams<Params>();
     const tag = findTag(parseInt(id));
-    let tempValue:string;
-    if (tag){
-        return(
+    let tempValue: string;
+    if (tag) {
+        return (
             <EditWrapper>
                 <header>
-                    <Link to='/tagsSettings'><Icon name='return'></Icon></Link>
+                    <Link to='/PayTagsSettings'><Icon name='return'></Icon></Link>
                     <span>编辑标签 - {tag.name}</span>
                 </header>
                 <label>
                     <span>修改标签名:</span>
-                    <input type= "text" placeholder="输入标签名"
+                    <input type="text" placeholder="输入标签名"
                            onChange={(e) => {
                                tempValue = e.target.value
                                // console.log(1)
@@ -125,22 +122,22 @@ const TagEdit: React.FC = () => {
                     />
                 </label>
                 <div>
-                    <AddButton onClick={(e) => {
-                        if(tempValue === tag.name || tempValue == ''){
+                    <AddButton onClick={() => {
+                        if (tempValue === tag.name || tempValue == '') {
                             window.alert('请输入新的标签名')
-                        }else {
+                        } else {
                             window.alert('修改成功')
-                            updateTag(tag.id,{name:tempValue})
+                            updateTag(tag.id, {name: tempValue, category: '-'})
                         }
-                    } }>确定修改</AddButton>
-                    <DeleteButton onClick={(e) => {
+                    }}>确定修改</AddButton>
+                    <DeleteButton onClick={() => {
                         deleteTag(tag.id)
                         // console.log(1)
                     }}>删除标签</DeleteButton>
                 </div>
             </EditWrapper>
         )
-    }else {
+    } else {
         return (
             <EditWrapper>
                 <header>
@@ -151,4 +148,3 @@ const TagEdit: React.FC = () => {
         )
     }
 }
-export {TagEdit};

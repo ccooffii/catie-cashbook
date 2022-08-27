@@ -15,7 +15,7 @@ const NaviWrapper = styled.div`
     display: flex;
     flex-direction: row;
     > a {
-      width: 33.333%;
+      width: 50%;
       > li {
         border-radius: 8px;
         margin-left: 2px;
@@ -41,11 +41,11 @@ const Navi = () =>{
     return(
         <NaviWrapper>
             <ul>
-                <NavLink to="/home"
-                         className = {({ isActive }) =>
-                             isActive ? activeClassName : undefined }>
-                        <li><Icon name="home"></Icon>主页</li>
-                </NavLink>
+                {/*<NavLink to="/home"*/}
+                {/*         className = {({ isActive }) =>*/}
+                {/*             isActive ? activeClassName : undefined }>*/}
+                {/*        <li><Icon name="home"></Icon>主页</li>*/}
+                {/*</NavLink>*/}
                 <NavLink to="/count"
                          className = {({ isActive }) =>
                              isActive ? activeClassName : undefined }>

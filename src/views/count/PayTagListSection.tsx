@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import React, {useState} from "react";
+import React from "react";
 import Icon from "../../components/Icon";
 import {Link} from "react-router-dom";
 import {useTags} from "../../hooks/useTags";
-interface TagProps {
+import classnames from 'classnames';
+
+interface PayTagProps {
     children?:React.ReactNode | React.ReactNode[];
     value:number[];
     onChange: (selected:number[]) => void;
@@ -59,6 +61,9 @@ const TagListSection = styled.ol`
       border: 3px solid rgb(246, 100, 100);
       background-color: rgb(246, 209, 181);
     }
+    &.hidden {
+      display: none;
+    }
 
     .icon {
       display: inline-block;
@@ -77,20 +82,8 @@ const TagListSection = styled.ol`
     }
   }
 `
-const TagsSection: React.FC<TagProps> = (props) => {
-    // const [tags, setTags] = useState<string[]>(['餐饮','房租','服装','娱乐','旅行','美容','汽车','饮品','宠物','购物','度假','医疗']);
-    // //const iconMap =['餐饮','房租','服装','娱乐','旅行','美容','汽车','饮品','宠物','购物','度假'];
-    // const iconMap:{[k:string]:string} ={'餐饮':'餐饮','房租':'房租','服装':'服装','娱乐':'娱乐','旅行':'旅行','美容':'美容','汽车':'汽车','饮品':'饮品','宠物':'宠物','购物':'购物','度假':'度假','医疗':'医疗'};
-    // const [selectedTagIds,setSelectedTags] = useState<string[]>([]);
+const PayTagsSection: React.FC<PayTagProps> = (props) => {
     const selectedTagIds = props.value;
-    // const onAddTag = () =>{
-    //     const newTagName = window.prompt('你要新增加的标签名称为')
-    //     console.log(newTagName);
-    //     if (newTagName !== null){
-    //         setTags([...tags,newTagName]);
-    //         console.log(setTags)
-    //     }
-    // };
     const onToggleTag = (tagId:number) => {
         // console.log(typeof setSelectedTags)
         const index = selectedTagIds.indexOf(tagId)
@@ -100,17 +93,20 @@ const TagsSection: React.FC<TagProps> = (props) => {
             props.onChange([tagId])
         }
     }
-    const {tags,iconMap} = useTags();
+    const {tags,IconMap} = useTags();
     return(
         <TagListSection>
             <div>
             {tags.map(tag=>
-                <li key={tag.id} onClick={() => {onToggleTag(tag.id)}} className={selectedTagIds.indexOf(tag.id) >= 0 ? 'selected': ''}>
-                    <Icon name={iconMap[tag.id]||'猫猫'}/>
+                <li key={tag.id} onClick={() => {onToggleTag(tag.id)}}
+                    // className={selectedTagIds.indexOf(tag.id) >= 0 ? 'selected': ''}
+                    className={classnames(tag.category==='-'?'':'hidden',selectedTagIds.indexOf(tag.id) >= 0 ? 'selected': '')}
+                >
+                    <Icon name={IconMap[tag.id]||'猫猫'}/>
                     {tag.name}
                 </li>
             )}
-            <Link to='/tagsSettings'>
+            <Link to='/payTagsSettings'>
                 <Icon name="设置"/>设置
             </Link>
             </div>
@@ -118,4 +114,5 @@ const TagsSection: React.FC<TagProps> = (props) => {
     );
 }
 
-export {TagsSection};
+export {PayTagsSection,TagListSection};
+// className={selectedTagIds.indexOf(tag.id) >= 0 ? 'selected': ''

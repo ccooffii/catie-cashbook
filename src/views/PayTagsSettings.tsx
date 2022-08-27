@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {Link} from "react-router-dom";
 import Icon from "../components/Icon";
 import {useTags} from "../hooks/useTags";
-const TagsBar = styled.div`
+export const TagsBar = styled.div`
   background-color:rgb(246,208,164);
   height: 50px;
   width: 100%;
@@ -25,7 +25,7 @@ const TagsBar = styled.div`
     transform: translateX(50%);
   }
 `
-const AddTagBar = styled.button`
+export const AddTagBar = styled.button`
   position: fixed;
   top: 80vh;
   left:50%;
@@ -40,14 +40,14 @@ const AddTagBar = styled.button`
   font-weight: bolder;
   box-shadow: inset -2px -3px 0px rgba(0,0,0,0.25);
 `
-const Container = styled.div`
+export const Container = styled.div`
   font-weight: bolder;
   display: flex;
   flex-direction: column;
   background-color:rgb(254,251,240) ;
   height: 100vh;
 `
-const TagsList = styled.div`
+export const TagsList = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 8px;
@@ -88,9 +88,12 @@ const TagsList = styled.div`
       }
     }
   }
+  >.hide{
+    display: none;
+  }
 `
-function TagsSettings(){
-    const {tags,iconMap,addTag} = useTags();
+function PayTagsSettings(){
+    const {tags,IconMap,addPayTag} = useTags();
     return (
         <Container>
             <TagsBar>
@@ -101,16 +104,16 @@ function TagsSettings(){
             </TagsBar>
             <TagsList>
                 {tags.map(tag=>
-                    <li key={tag.id}>
-                        <Link to={'/tagsSettings/'+tag.id}>
-                            <Icon name={iconMap[tag.id]||'猫猫'}/>
+                    <li key={tag.id} className={tag.category==='-'?'':'hide'}>
+                        <Link to={'/PayTagsSettings/'+tag.id}>
+                            <Icon name={IconMap[tag.id]||'猫猫'}/>
                             <span>{tag.name}{' '+'>'}</span>
                         </Link>
                     </li>
                 )}
             </TagsList>
-            <AddTagBar onClick={addTag}>新增标签</AddTagBar>
+            <AddTagBar onClick={addPayTag}>新增标签</AddTagBar>
         </Container>
     )
 }
-export default  TagsSettings;
+export default  PayTagsSettings;

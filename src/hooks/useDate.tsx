@@ -1,6 +1,12 @@
 import dayjs from "dayjs"
  const useDate = () =>{
-    const findDay=(date:string) => {
+    const findMonth=(date:string) => {
+        return dayjs(date).format('MM')
+    }
+     const findDay=(date:string) => {
+         return dayjs(date).format('YYYY-MM-DD')
+     }
+    const findToday=(date:string) => {
         const tempDayValue = dayjs(date).day()
         switch (tempDayValue){
             case 1 :
@@ -27,6 +33,6 @@ import dayjs from "dayjs"
 
         }
     }
-    return {findDay};
+    return {findToday,findMonth,findDay};
 }
 export {useDate};
